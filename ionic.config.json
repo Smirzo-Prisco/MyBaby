@@ -1,5 +1,7 @@
 {
   "name": "LeL",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

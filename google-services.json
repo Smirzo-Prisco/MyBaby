@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "460976354595",
+    "firebase_url": "https://lalu-ef80a.firebaseio.com",
+    "project_id": "lalu-ef80a",
+    "storage_bucket": "lalu-ef80a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460976354595:android:25d450e1a2663764170896",
+        "android_client_info": {
+          "package_name": "com.bottini.lalu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460976354595-ukds593jsf6h0522o0gk234t4huegho3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_X9lP07JX_SLiBmsJqIEIQlQpxtX5EeU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460976354595-ukds593jsf6h0522o0gk234t4huegho3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
