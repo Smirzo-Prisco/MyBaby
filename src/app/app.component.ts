@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private firebaseX: FirebaseX,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    private http: HTTP
   ) {
     this.initializeApp();
   }
@@ -65,6 +67,24 @@ export class AppComponent {
           error => console.error(error)
         );
       //  END  Local Storage
+
+        //  HTTP
+        this.http.get('http://lavinia.robertobottini.com/app/set.php', {}, {})
+        .then(data => {
+            console.log('HTTP data:', data);
+            console.log(data.status);
+            console.log(data.data); // data received by server
+            console.log(data.headers);
+
+        })
+        .catch(error => {
+
+            console.log('error status', error.status);
+            console.log(error.error); // error message as string
+            console.log(error.headers);
+
+        });
+        //  END    HTTP
     });
   }
 }
