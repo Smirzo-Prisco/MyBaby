@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,8 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private firebaseX: FirebaseX,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    private http: HTTP
   ) {
     this.initializeApp();
   }
@@ -65,8 +67,27 @@ export class AppComponent {
           error => console.error(error)
         );
       //  END  Local Storage
+
+        //  HTTP
+        this.http.get('http://lavinia.robertobottini.com/app/set.php', {}, {})
+        .then(data => {
+            console.log('HTTP data:', data);
+            console.log(data.status);
+            console.log(data.data); // data received by server
+            console.log(data.headers);
+
+        })
+        .catch(error => {
+
+            console.log('error status', error.status);
+            console.log(error.error); // error message as string
+            console.log(error.headers);
+
+        });
+        //  END    HTTP
     });
   }
 }
 // #eb-8kgpPOZk:APA91bEWFfYc7ronv5qLZpANWUc0lwZLnl8OLhih4YwRBbPc2Ba3BDJke0XgvS-79mbqmyT0cqEpm6SZHtRONx5PvgZ-fTKuxeVlE6Sv8qTmZUhUjUwOrAYHR1Ql2mq_Jjc7SUzf8Qqb personale
 // fyDqIgpgBPw:APA91bHpIEwjcI00EMeC4Nd67XmeiikNvnuYrtkpokUPubd0zZzmQKF901kEh6abUsdb2BP11CciVUp4CGas9rLXBo586m7U5gDAHwJwHKiqQONh1HfxUmDifU72Ze-SxQJ2JEulDxH0  lavoro
+// eoJQ1XQ2rU8:APA91bG0Asff_Gns8HeP3bSX-hwtboeqUhYQfV22GAZl-xA4R1Y5CHuXd20IKBbTZxyWDSjbSSyU81f_jYs0Ng_w49A9Oh7A8PEbt1Wn1O2rA-o8W9S4JXaHON_ySTWjG0BxUcccCQTJ  emulatore
