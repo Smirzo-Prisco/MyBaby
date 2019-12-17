@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { Events, Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
+import { Network } from '@ionic-native/network/ngx';
+
+import { Router } from '@angular/router';
+
+import { environment } from '../environments/environment';
+import { CommonService } from './services/common/common.service';
+import { LoginService } from './services/login/login.service';
 
 @Component({
   selector: 'app-root',
@@ -26,65 +32,142 @@ export class AppComponent {
     }
   ];
 
+  offline: any;
+  validateSubscription;
+
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private firebaseX: FirebaseX,
     private nativeStorage: NativeStorage,
-    private http: HTTP
+    private http: HTTP,
+    private network: Network,
+    private events: Events,
+    private router: Router,
+    private commonService: CommonService,
+    private loginService: LoginService
   ) {
     this.initializeApp();
   }
 
+  goToLogin() {
+    this.router.navigateByUrl('/login');
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      //  controllo la connessione dell'utente
+      this.commonService.checkConnection();
 
-      //  Annuncio Firebase Cloud Messaging
+      let header = '';
+      let message = '';
+      let presentAlert = false;
+
+      this.goToLogin();
+
       this.firebaseX.getToken()
-        .then(token => console.log(`The token is ${token}`)) // save the token server-side and use it to push notifications to this device
-        .catch(error => console.error('Error getting token', error));
+          .then(token => {
+            console.log('Token di Firebase: ' + token);
 
-      this.firebaseX.onMessageReceived()
-        .subscribe(data => console.log(`User opened a notification ${data}`));
+            if(token != null && token != '' && !this.offline) {
+              this.loginService.validate(true, token);
+
+            } else {
+              console.log('gotologin');
+
+              this.goToLogin();
+            }
+
+            this.nativeStorage.setItem('userInfo', {firebaseToken: token})
+                .then(
+                    () => console.log('Stored item!'),
+                    error => console.error('Error storing item', error)
+                );
+
+            // INVIA TOKEN ALL'ANAGRAFICA UTENTI SUL DATABASE
+            if(token != null && token != '' && token != undefined) {
+              this.loginService.updateUser(token);
+            }
+          }) // save the token server-side and use it to push notifications to this device
+          .catch(error => {
+            console.error('Errore nel recupero del token', error);
+
+            this.goToLogin();
+          });
+      //*
 
       this.firebaseX.onTokenRefresh()
-        .subscribe((token: string) => console.log(`Got a new token ${token}`));
-      //  END Annuncio Firebase Cloud Messaging
+          .subscribe((token: string) => {
+            this.nativeStorage.getItem('userInfo')
+                .then(
+                    data => {
+                      if(data.firebaseToken != token) {
+                        // AGGIORNA TOKEN ALL'ANAGRAFICA UTENTI SUL DATABASE
+                        if(token != null && token != '' && token != undefined) {
+                          this.loginService.updateUser(token);
+                          console.log('Nuovo token da Firebase ' + token);
+                        }
+                      }
+                    },
+                    error => {
+                      console.error(error)
+                    }
+                )
+          });
 
-      //  Local Storage
-      this.nativeStorage.setItem('myitem', {property: 'value', anotherProperty: 'anotherValue'})
-        .then(
-          () => console.log('Stored item!'),
-          error => console.error('Error storing item', error)
-        );
 
-      this.nativeStorage.getItem('myitem')
-        .then(
-          data => console.log(data),
-          error => console.error(error)
-        );
-      //  END  Local Storage
 
-        //  HTTP
-        this.http.get('http://lavinia.robertobottini.com/app/set.php', {}, {})
-        .then(data => {
-            console.log('HTTP data:', data);
-            console.log(data.status);
-            console.log(data.data); // data received by server
-            console.log(data.headers);
 
-        })
-        .catch(error => {
 
-            console.log('error status', error.status);
-            console.log(error.error); // error message as string
-            console.log(error.headers);
 
-        });
-        //  END    HTTP
+
+
+
+
+      // this.statusBar.styleDefault();
+      //
+      // //  Annuncio Firebase Cloud Messaging
+      // this.firebaseX.getToken()
+      //   .then(token => console.log(`The token is ${token}`)) // save the token server-side and use it to push notifications to this device
+      //   .catch(error => console.error('Error getting token', error));
+      //
+      // this.firebaseX.onMessageReceived()
+      //   .subscribe(data => console.log(`User opened a notification ${data}`));
+      //
+      // this.firebaseX.onTokenRefresh()
+      //   .subscribe((token: string) => console.log(`Got a new token ${token}`));
+      // //  END Annuncio Firebase Cloud Messaging
+      //
+      // //  Local Storage
+      // this.nativeStorage.setItem('myitem', {property: 'value', anotherProperty: 'anotherValue'})
+      //   .then(
+      //     () => console.log('Stored item!'),
+      //     error => console.error('Error storing item', error)
+      //   );
+      //
+      // this.nativeStorage.getItem('myitem')
+      //   .then(
+      //     data => console.log(data),
+      //     error => console.error(error)
+      //   );
+      // //  END  Local Storage
+      //
+      // //  HTTP
+      // const params = { act: 'set_login' }
+      // this.http.get(environment.BASEURL + 'app/router.php', {}, {})
+      // .then(data => {
+      //     console.log('HTTP data:', data);
+      //     console.log(data.status);
+      //     console.log(data.data); // data received by server
+      //     console.log(data.headers);
+      // })
+      // .catch(error => {
+      //     console.log('error status', error.status);
+      //     console.log(error.error); // error message as string
+      //     console.log(error.headers);
+      //
+      // });
+      //  END    HTTP
     });
   }
 }

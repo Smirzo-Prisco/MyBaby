@@ -8,6 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
+import { Network } from '@ionic-native/network/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
     FirebaseX,
     NativeStorage,
     HTTP,
+    Network,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
