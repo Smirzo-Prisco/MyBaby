@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { Network } from '@ionic-native/network/ngx';
 
 @Injectable({
@@ -11,7 +11,8 @@ export class CommonService {
 
   constructor(
       private network: Network,
-      private alertController: AlertController
+      private alertController: AlertController,
+      private loadingController: LoadingController
   ) { }
 
   async presentAlert(header?: string, message?: string) {
@@ -34,5 +35,35 @@ export class CommonService {
       this.offline = false;
     });
     // connectSubscription.unsubscribe();
+  }
+
+  async presentLoading(message?: string, timeInSeconds: number = 10) {
+
+    let content = message ? message : 'Sto caricando…';
+
+    return await this.loadingController.create({
+      mode: 'ios',
+      spinner: 'crescent',
+      translucent: true,
+      cssClass: 'custom-class custom-loading',
+      message: content
+    }).then((loading) => {
+      loading.present().then(() => {
+        setTimeout(() => {
+          loading.dismiss();
+        }, timeInSeconds * 1000);
+      })
+    })
+  }
+
+  async dismissLoading() {
+    this.loadingController.getTop().then((value) => {
+      if(value) {
+        return this.loadingController.dismiss();
+      } else {
+        return null;
+      }
+    })
+
   }
 }

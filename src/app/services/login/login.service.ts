@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Events, AlertController } from '@ionic/angular';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 
 import { environment } from '../../../environments/environment';
 import { CommonService } from '../../services/common/common.service';
@@ -11,13 +11,10 @@ import { CommonService } from '../../services/common/common.service';
   providedIn: 'root'
 })
 export class LoginService {
-    // salt: string = "F30E205099F3DC661489B2FEC55921EB";
-    deviceid: string = "optional";
-    secondarydeviceid: string = "optional";
-    idapp: string = "easyprj.app";
-    // signature: string = this.salt + "." + this.idapp;
+    // deviceid: string = "optional";
+    // secondarydeviceid: string = "optional";
+    // idapp: string = "easyprj.app";
     token: string = null;
-    // validateTimer: Subscription;
     username: string;
     password: string;
     remember: boolean;
@@ -32,30 +29,26 @@ export class LoginService {
     ) {}
 
     // SET OR UPDATE NOTIFICATION TOKEN OF CURRENT DEVICE
-    updateUser(token) {
-    // this.nativeStorage.getItem('userId').then((userId) => {
-    //   const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' });
-    //   return this.nativeHttp.post("/src/sys_user/update_notification_token/" + userId, { 'notification_token': token }, { headers: headers })
-    //       .subscribe((response) => {
-    //         console.log(response);
-    //       })
-    // })
-    //
-    //
-    // this.nativeStorage.getItem('userInfo')
-    //     .then(
-    //         data => {
-    //           console.log(data);
-    //
-    //           return this.nativeHttp.post("/src/sys_user/update_notification_token/" + userId, { 'notification_token': token }, { /*headers: headers*/ })
-    //               .subscribe((response) => {
-    //                 console.log(response);
-    //               })
-    //         },
-    //         error => {
-    //           console.error(error)
-    //         }
-    //     );
+    updateUserToken(token) {
+        this.nativeStorage.getItem('userInfo')
+            .then(
+                data => {
+                  console.log('userInfo:', data);
+
+                  const params = {
+                    userId: data.userId,
+                    act: 'update_user_token'
+                  }
+
+                  return this.http.post(environment.BASEURL + 'app/router.php', params, {})
+                      .then((response) => {
+                        console.log(response.data);
+                      })
+                },
+                error => {
+                  console.error(error)
+                }
+            );
     }
 
     login(form) {
@@ -67,39 +60,19 @@ export class LoginService {
         this.savePassword = form.value.rememberMe;
 
         const params = {
+            // operation: operation,
+            // deviceid: this.deviceid,
+            // secondarydeviceid: this.secondarydeviceid,
+            // idapp: this.idapp,
             act: 'set_login',
             login_usr: this.username,
-            login_pwd: this.password,
-            operation: operation,
-            deviceid: this.deviceid,
-            secondarydeviceid: this.secondarydeviceid,
-            idapp: this.idapp
+            login_pwd: this.password
         }
 
         return this.http
             .post(environment.BASEURL + 'app/router.php', params, {})
             .then((data) => {
-                console.log(data);
-                // if(response['response']['ERRCODE'] == "00") {
-                //
-                //     this.token = (response['response']['TOKEN']);
-                //
-                //     this.nativeStorage.setItem('userInfo', {firebaseToken: this.token});
-                // } else {
-                //
-                //     this.commonService.presentAlert('Sei collegato alla rete Eni (tramite wi-fi o VPN)? Hai inserito le credenziali corrette?',
-                //         'Per favore controlla e riprova. Se il problema persiste, contatta l\'amministrazione del sistema.');
-                //
-                //     // this.loadingService.dismissLoading();
-                // }
-
-
                 let response = JSON.parse(data.data);
-
-                console.log(response);
-
-                console.log('errNo:', response.errNo);
-                console.log('userId:', response.userId);
 
                 switch (response.errNo) {
                     case 1:   //  utente errato
@@ -124,7 +97,7 @@ export class LoginService {
             isAdmin: data.permission
         });
 
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/timeline');
     }
 
     // VALIDATE TOKEN

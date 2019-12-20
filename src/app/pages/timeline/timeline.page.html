@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Timeline</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<!--  <ion-virtual-scroll [items]="items" approxItemHeight="320px">-->
+<!--    <ion-item-divider *virtualHeader="let header">-->
+<!--      {{ header }}-->
+<!--    </ion-item-divider>-->
+<!--    <ion-item *virtualItem="let item">-->
+<!--      <ion-avatar slot="start">-->
+<!--        <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.img}}">-->
+<!--      </ion-avatar>-->
+<!--      <p>-->
+<!--        {{item.description}}-->
+<!--      </p>-->
+<!--      <br>-->
+<!--      <p>-->
+<!--        {{item.author}} - {{item.date}}-->
+<!--      </p>-->
+<!--    </ion-item>-->
+<!--  </ion-virtual-scroll>-->
+
+
+  <ion-item *ngFor="let item of items">
+    <ion-item-divider *virtualHeader="let header">
+      {{ header }}
+    </ion-item-divider>
+    <ion-avatar slot="start">
+      <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.img}}">
+    </ion-avatar>
+    <p>{{item.description}}</p>
+    <p>
+      <small>{{item.author}}</small>
+    </p>
+    <p>
+      <small>{{item.date}}</small>
+    </p>
+  </ion-item>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
+
+
+<!--  <ion-virtual-scroll [items]="items" [trackBy]="trackList" approxItemHeight="320px">-->
+<!--    <div class="item" *virtualItem="let item">-->
+<!--      <div class="avatar">-->
+<!--        <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.img}}">-->
+<!--      </div>-->
+<!--      <p>{{item.description}}</p>-->
+<!--      <p>-->
+<!--        <small>{{item.author}} - {{item.date}}</small>-->
+<!--      </p>-->
+<!--    </div>-->
+<!--  </ion-virtual-scroll>-->
+</ion-content>

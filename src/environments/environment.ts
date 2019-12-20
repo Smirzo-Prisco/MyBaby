@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  BASEURL: 'http://lavinia.robertobottini.com/'
+  BASEURL: 'http://lavinia.robertobottini.com/',
+  IMGFOLDER: 'img/lav/'
 };
 
 /*

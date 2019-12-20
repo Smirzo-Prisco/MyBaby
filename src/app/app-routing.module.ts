@@ -9,15 +9,19 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./views/home/home.module').then(m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
   },
   {
     path: 'list',
-    loadChildren: () => import('./views/list/list.module').then(m => m.ListPageModule)
+    loadChildren: () => import('./pages/list/list.module').then(m => m.ListPageModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./views/login/login.module').then(m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
+  },
+  {
+    path: 'timeline',
+    loadChildren: () => import('./pages/timeline/timeline.module').then( m => m.TimelinePageModule)
   }
 ];
 

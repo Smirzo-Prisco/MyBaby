@@ -9,7 +9,6 @@ import { Network } from '@ionic-native/network/ngx';
 
 import { Router } from '@angular/router';
 
-import { environment } from '../environments/environment';
 import { CommonService } from './services/common/common.service';
 import { LoginService } from './services/login/login.service';
 
@@ -20,15 +19,20 @@ import { LoginService } from './services/login/login.service';
 })
 export class AppComponent {
   public appPages = [
+    // {
+    //   title: 'Home',
+    //   url: '/home',
+    //   icon: 'home'
+    // },
+    // {
+    //   title: 'List',
+    //   url: '/list',
+    //   icon: 'list'
+    // },
     {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
+      title: 'Timeline',
+      url: '/timeline',
+      icon: 'timeline'
     }
   ];
 
@@ -80,13 +84,13 @@ export class AppComponent {
 
             this.nativeStorage.setItem('userInfo', {firebaseToken: token})
                 .then(
-                    () => console.log('Stored item!'),
-                    error => console.error('Error storing item', error)
+                    () => console.log('Token stored!'),
+                    error => console.error('Error storing token', error)
                 );
 
             // INVIA TOKEN ALL'ANAGRAFICA UTENTI SUL DATABASE
             if(token != null && token != '' && token != undefined) {
-              this.loginService.updateUser(token);
+              this.loginService.updateUserToken(token);
             }
           }) // save the token server-side and use it to push notifications to this device
           .catch(error => {
@@ -94,7 +98,6 @@ export class AppComponent {
 
             this.goToLogin();
           });
-      //*
 
       this.firebaseX.onTokenRefresh()
           .subscribe((token: string) => {
@@ -104,7 +107,7 @@ export class AppComponent {
                       if(data.firebaseToken != token) {
                         // AGGIORNA TOKEN ALL'ANAGRAFICA UTENTI SUL DATABASE
                         if(token != null && token != '' && token != undefined) {
-                          this.loginService.updateUser(token);
+                          this.loginService.updateUserToken(token);
                           console.log('Nuovo token da Firebase ' + token);
                         }
                       }
