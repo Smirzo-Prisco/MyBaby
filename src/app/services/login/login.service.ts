@@ -97,7 +97,7 @@ export class LoginService {
             isAdmin: data.permission
         });
 
-        this.router.navigateByUrl('/timeline');
+        this.router.navigateByUrl('/gallery');
     }
 
     // VALIDATE TOKEN

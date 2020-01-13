@@ -22,6 +22,10 @@ const routes: Routes = [
   {
     path: 'timeline',
     loadChildren: () => import('./pages/timeline/timeline.module').then( m => m.TimelinePageModule)
+  },
+  {
+    path: 'gallery',
+    loadChildren: () => import('./pages/gallery/gallery.module').then( m => m.GalleryPageModule)
   }
 ];
 

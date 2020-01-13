@@ -14,6 +14,7 @@ export class DataService {
   constructor(
       private http: HTTP,
       private router: Router,
+      private nativeStorage: NativeStorage,
       private commonService: CommonService
   ) { }
 
@@ -35,5 +36,25 @@ export class DataService {
       .then((data) => {
         return JSON.parse(data.data);
       })
+  }
+
+  getGalleryItems(from) {
+    const params = {
+      act: 'get_gallery_items',
+      n_items: from,
+      userId: this.nativeStorage.getItem('userInfo').then( data => { return data.userId } )
+    }
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT'
+    };
+
+    return this.http
+        .post(environment.BASEURL + 'app/router.php', params, headers)
+        .then((data) => {
+          return JSON.parse(data.data);
+        })
   }
 }

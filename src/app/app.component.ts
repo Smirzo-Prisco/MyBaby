@@ -33,6 +33,11 @@ export class AppComponent {
       title: 'Timeline',
       url: '/timeline',
       icon: 'timeline'
+    },
+    {
+      title: 'Gallery',
+      url: '/gallery',
+      icon: 'gallery'
     }
   ];
 
