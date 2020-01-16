@@ -32,12 +32,12 @@ export class AppComponent {
     {
       title: 'Timeline',
       url: '/timeline',
-      icon: 'timeline'
+      icon: 'home'
     },
     {
       title: 'Gallery',
       url: '/gallery',
-      icon: 'gallery'
+      icon: 'home'
     }
   ];
 

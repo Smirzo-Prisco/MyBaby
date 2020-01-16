@@ -13,6 +13,8 @@ import { Network } from '@ionic-native/network/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -28,6 +30,7 @@ import { AppRoutingModule } from './app-routing.module';
     NativeStorage,
     HTTP,
     Network,
+    YoutubeVideoPlayer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

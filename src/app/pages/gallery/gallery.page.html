@@ -1,15 +1,21 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>gallery</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-slides class="slide-padding" pager="false" [options]="slideOpts">
+  <ion-slides class="slide-padding" pager="false" centeredSlides="true" effect="cube" paginationType="fraction" slidesPerView="3" spaceBetween="5" zoom="true" speed="50" ionSlideDoubleTap="mettereLike()">  <!--   [options]="slideOpts"  -->
     <ion-slide *ngFor="let item of items">
       <div>
-        <div style="width: 100%">
+        <div style="width: 100%" *ngIf="item.type === 'img'">
           <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.name}}">
+        </div>
+        <div style="width: 100%" *ngIf="item.type === 'video'">
+          <iframe [src]="sanitizeUrl(item.name)" allowscriptaccess="always" width="100%" frameborder="0" allowfullscreen></iframe>
         </div>
         <div class="comment_container" *ngFor="let comment of item.comments">
           <ion-item-divider *virtualHeader="let header">
@@ -18,7 +24,7 @@
           <div class="comment_author">{{comment.author.user_kinship | titlecase}} {{comment.author.user_first | titlecase}}</div>
           <div class="comment_input_text">{{comment.text}}</div>
           <div class="comment-footer">
-            <div class="like"><ion-icon name="md-heart"></ion-icon><ion-icon name="md-heart-outline"></ion-icon></div>
+            <div class="like"><ion-icon name="md-heart"></ion-icon></div>
             <div class="time">{{comment.time}}</div>
           </div>
         </div>

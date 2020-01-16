@@ -35,27 +35,27 @@ export class TimelinePage implements OnInit {
       });
   }
 
-    loadData(event) {
-        setTimeout(() => {
-            let itemsLength = this.items.length;
-            console.log('Done', itemsLength);
+  loadData(event) {
+    setTimeout(() => {
+        let itemsLength = this.items.length;
+        console.log('Done', itemsLength);
 
-            this.commonService.presentLoading();
+        this.commonService.presentLoading();
 
-            this.dataService.getTimeline(itemsLength, this.to)
-                .then((data) => {
-                    console.log(data);
+        this.dataService.getTimeline(itemsLength, this.to)
+            .then((data) => {
+                console.log(data);
 
-                    for (let i = 0; i < 25; i++) {
-                        this.items.push(data[i]);
-                    }
+                for (let i = 0; i < 25; i++) {
+                    this.items.push(data[i]);
+                }
 
-                    this.commonService.dismissLoading();
-                });
+                this.commonService.dismissLoading();
+            });
 
-            event.target.complete();
-        }, 300);
-    }
+        event.target.complete();
+    }, 300);
+  }
 
   trackList(index, item) {
     return item ? item.id : index;
