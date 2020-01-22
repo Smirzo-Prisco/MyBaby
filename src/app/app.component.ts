@@ -76,22 +76,17 @@ export class AppComponent {
 
       this.firebaseX.getToken()
           .then(token => {
-            console.log('Token di Firebase: ' + token);
+            console.log('Firebase TOKEN: ' + token);
 
             if(token != null && token != '' && !this.offline) {
               this.loginService.validate(true, token);
-
             } else {
-              console.log('gotologin');
+              console.log('TOKEN non valido');
 
               this.goToLogin();
             }
 
-            this.nativeStorage.setItem('userInfo', {firebaseToken: token})
-                .then(
-                    () => console.log('Token stored!'),
-                    error => console.error('Error storing token', error)
-                );
+            this.nativeStorage.setItem('userInfo', {firebaseToken: token});
 
             // INVIA TOKEN ALL'ANAGRAFICA UTENTI SUL DATABASE
             if(token != null && token != '' && token != undefined) {
@@ -105,30 +100,23 @@ export class AppComponent {
           });
 
       this.firebaseX.onTokenRefresh()
-          .subscribe((token: string) => {
-            this.nativeStorage.getItem('userInfo')
-                .then(
-                    data => {
-                      if(data.firebaseToken != token) {
-                        // AGGIORNA TOKEN ALL'ANAGRAFICA UTENTI SUL DATABASE
-                        if(token != null && token != '' && token != undefined) {
-                          this.loginService.updateUserToken(token);
-                          console.log('Nuovo token da Firebase ' + token);
-                        }
-                      }
-                    },
-                    error => {
-                      console.error(error)
+        .subscribe((token: string) => {
+          this.nativeStorage.getItem('userInfo')
+            .then(
+                data => {
+                  if(data.firebaseToken != token) {
+                    // AGGIORNA TOKEN ALL'ANAGRAFICA UTENTI SUL DATABASE
+                    if(token != null && token != '' && token != undefined) {
+                      this.loginService.updateUserToken(token);
+                      console.log('Nuovo token da Firebase ' + token);
                     }
-                )
-          });
-
-
-
-
-
-
-
+                  }
+                },
+                error => {
+                  console.error(error)
+                }
+            )
+        });
 
 
 

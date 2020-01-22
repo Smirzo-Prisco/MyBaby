@@ -8,8 +8,8 @@ import { LoginService } from '../../services/login/login.service';
 import { CommonService } from "../../services/common/common.service";
 
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-// import { FingerprintAIO  } from '@ionic-native/fingerprint-aio/ngx';
-import { AndroidFingerprintAuth } from '@ionic-native/android-fingerprint-auth/ngx';
+// import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
+// import { AndroidFingerprintAuth } from '@ionic-native/android-fingerprint-auth/ngx';
 
 @Component({
   selector: 'app-login',
@@ -30,8 +30,8 @@ export class LoginPage {
     private loginService: LoginService,
     private nativeStorage: NativeStorage,
     private sideMenu: MenuController,
-    // private faio: FingerprintAIO
-    private androidFingerprintAuth: AndroidFingerprintAuth
+    // private faio: FingerprintAIO,
+    // private androidFingerprintAuth: AndroidFingerprintAuth
   ) { }
 
   // ngOnInit() {
@@ -74,9 +74,8 @@ export class LoginPage {
     this.loginService.login(form);
   }
 
+  /*
   showFingerprintAuthDlg(){
-    console.log('entrato in showFingerprintAuthDlg');
-
       this.androidFingerprintAuth.isAvailable()
           .then((result)=> {
               if(result.isAvailable){
@@ -103,4 +102,5 @@ export class LoginPage {
           })
           .catch(error => console.error(error));
   }
+  */
 }

@@ -94,7 +94,8 @@ export class LoginService {
     goHome(data){
         this.nativeStorage.setItem('userInfo', {
             userId: data.userId,
-            isAdmin: data.permission
+            isAdmin: data.permission,
+            fingerPrint: data.fingerprint
         });
 
         this.router.navigateByUrl('/gallery');

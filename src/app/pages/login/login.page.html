@@ -1,17 +1,19 @@
+<!--
 <ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
+-->
 
-<ion-content>
+<ion-content class="bg_login">
   <div class="big-bg"></div>
 
   <ion-grid class="ion-text-center">
     <ion-row>
       <ion-col>
         <ion-text color="primary">
-          <p class="ion-no-margin" style="font-size:1rem; font-weight: 400;">Se non sei registrato puoi accedere inserendo solamente nome e cognome lasciando vuoto il campo password</p>
+          <p class="ion-no-margin" class="txt-info-login">Se non sei registrato puoi accedere inserendo solamente nome e cognome lasciando vuoto il campo password</p>
         </ion-text>
       </ion-col>
     </ion-row>
@@ -19,31 +21,32 @@
     <ion-row class="ion-justify-content-center">
       <ion-col class="ion-align-self-start" size="12" size-sm="7" size-md="5" size-lg="4" size-xl="3">
         <form
-                class="ion-padding-horizontal"
-                #form="ngForm"
-                (ngSubmit)="onLogin(form)">
+          class="ion-padding-horizontal"
+          #form="ngForm"
+          (ngSubmit)="onLogin(form)">
           <ion-input
-                  class="login-form ion-margin-bottom"
-                  type="text"
-                  [(ngModel)]="username"
-                  name="username"
-                  placeholder="Username"
-                  required></ion-input>
+            class="login-form ion-margin-bottom"
+            type="text"
+            [(ngModel)]="username"
+            name="username"
+            placeholder="Username"
+            required></ion-input>
           <ion-input
-                  class="login-form ion-margin-bottom"
-                  type="password"
-                  [(ngModel)]="password"
-                  name="password"
-                  placeholder="Password"
-                  required></ion-input>
+            class="login-form ion-margin-bottom"
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="Password"
+            required></ion-input>
           <ion-button
-                  mode="ios"
-                  expand="block"
-                  size="large"
-                  type="submit"
-                  color="warning"
-                  [disabled]="!form.valid">
+            mode="ios"
+            expand="block"
+            size="large"
+            type="submit"
+            class="btn-login"
+            [disabled]="!form.valid">
             ACCEDI</ion-button>
+          <!--
           <ion-item class="ion-text-right">
             <ion-label><small>Ricordami</small></ion-label>
             <ion-checkbox
@@ -55,6 +58,7 @@
                     [(ngModel)]="rememberMe"></ion-checkbox>
           </ion-item>
           <ion-button (click)="showFingerprintAuthDlg()">show fingerprint auth dialog  </ion-button>
+          -->
         </form>
       </ion-col>
     </ion-row>
