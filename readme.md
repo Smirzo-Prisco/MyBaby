@@ -12,6 +12,6 @@
 
 7. create firebase project: https://console.firebase.google.com/
 
-8.generate APK ionic cordova build android --prod
+8. generate APK ionic cordova build android --prod
 
-9.run app on android emulator: ionic cordova run android
+9. run app on android emulator: ionic cordova run android
