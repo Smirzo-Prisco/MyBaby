@@ -10,13 +10,8 @@ import { DomSanitizer } from "@angular/platform-browser";
   templateUrl: './gallery.page.html',
   styleUrls: ['./gallery.page.scss']
 })
-export class GalleryPage implements OnInit {
-  // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
-  // slideOpts = {
-  //   initialSlide: 1,
-  //   speed: 400
-  // };
 
+export class GalleryPage implements OnInit {
     public items: Array<any>;
     public env: any;
     public to: any;
@@ -29,50 +24,57 @@ export class GalleryPage implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.commonService.presentLoading();
+      this.commonService.presentLoading();
+      this.to = 8;
 
-        this.dataService.getGalleryItems(0)
-            .then((data) => {
-                console.log(data);
+      console.log(0, this.to);
 
-                this.items = data;
-                this.env = environment;
+      this.commonService.presentLoading();
 
-                this.commonService.dismissLoading();
-            });
+      this.dataService.getGalleryItems(0, this.to)
+          .then((data) => {
+              console.log(data);
+
+              this.items = data;
+              this.env = environment;
+
+              this.commonService.dismissLoading();
+          });
     }
 
     sanitizeUrl(yt_id){
-        return this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + yt_id);
+        let ytParams = '?showinfo=0&controls=2&fs=0&frameborder=0&iv_load_policy=3&modestbranding=1&rel=0';
+
+        return this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + yt_id + ytParams);
     }
 
     mettereLike() {
         console.log('LIKEEEEEEE!!!!');
     }
 
-    loadData(event) {
-        setTimeout(() => {
-            let itemsLength = this.items.length;
-            console.log('Done', itemsLength);
+    loadDataGallery(event) {
+      setTimeout(() => {
+          let itemsLength = this.items.length;
+          console.log('Done', itemsLength);
 
-            this.commonService.presentLoading();
+          this.commonService.presentLoading();
 
-            this.dataService.getGalleryItems(itemsLength)
-                .then((data) => {
-                    console.log(data);
+          this.dataService.getGalleryItems(itemsLength, this.to)
+              .then((data) => {
+                  console.log(data);
 
-                    for (let i = 0; i < 25; i++) {
-                        this.items.push(data[i]);
-                    }
+                  for (let i = 0; i < this.to; i++) {
+                      this.items.push(data[i]);
+                  }
 
-                    this.commonService.dismissLoading();
-                });
+                  this.commonService.dismissLoading();
+              });
 
-            event.target.complete();
-        }, 300);
+          event.target.complete();
+      }, 300);
     }
 
-    trackList(index, item) {
-        return item ? item.id : index;
+    trackListGallery(index, item) {
+      return item ? item.id : index;
     }
 }

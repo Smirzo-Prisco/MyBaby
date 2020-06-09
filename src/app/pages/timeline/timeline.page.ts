@@ -35,7 +35,7 @@ export class TimelinePage implements OnInit {
       });
   }
 
-  loadData(event) {
+  loadDataTimeline(event) {
     setTimeout(() => {
         let itemsLength = this.items.length;
         console.log('Done', itemsLength);
@@ -46,7 +46,7 @@ export class TimelinePage implements OnInit {
             .then((data) => {
                 console.log(data);
 
-                for (let i = 0; i < 25; i++) {
+                for (let i = 0; i < this.to; i++) {
                     this.items.push(data[i]);
                 }
 
@@ -57,7 +57,7 @@ export class TimelinePage implements OnInit {
     }, 300);
   }
 
-  trackList(index, item) {
+  trackListTimeline(index, item) {
     return item ? item.id : index;
   }
 }

@@ -1,1 +1,60 @@
+/*
+buildscript {
+    dependencies {
+        classpath 'com.android.tools.build:gradle'
+    }
+}
+*/
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+apply plugin: 'com.android.application'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.0'
+    }
+}
+
+// Allow plugins to declare Maven dependencies via build-extras.gradle.
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+        google()
+    }
+}
+
+android {
+    compileSdkVersion 29  //already defined
+
+    defaultConfig {
+        applicationId "videocorsi.esempi.newsreaderv13"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'platforms/android/app/src/main/AndroidManifest.xml'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildToolsVersion '29.0.3'
+    buildTypes {
+        release {
+            applicationIdSuffix 'LeL'
+            versionNameSuffix '0.0.0'
+        }
+    }
+}

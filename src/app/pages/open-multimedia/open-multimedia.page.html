@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/gallery"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <div *ngIf="type === 'img'">Foto</div>
+      <div *ngIf="type === 'video'">Video</div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="type === 'img'">
+    <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{name}}">
+  </div>
+  <div *ngIf="type === 'video'">
+    <iframe class="gallery-element" [src]="sanitizeUrl(name)" allowscriptaccess="always" width="100%" frameborder="0" allowfullscreen autoplay></iframe>
+  </div>
+  <div class="comment_container" *ngFor="let comment of items">
+    <ion-item-divider *virtualHeader="let header">
+      {{ header }}
+    </ion-item-divider>
+    <div class="comment_author">{{comment.author.user_kinship | titlecase}} {{comment.author.user_first | titlecase}}</div>
+    <div class="comment_input_text">{{comment.text}}</div>
+    <div class="comment-footer">
+      <div class="like"><ion-icon name="md-heart"></ion-icon></div>
+      <div class="time">{{comment.time}}</div>
+    </div>
+  </div>
+</ion-content>

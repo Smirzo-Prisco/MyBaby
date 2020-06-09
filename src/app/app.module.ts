@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -17,13 +18,17 @@ import { AndroidFingerprintAuth } from '@ionic-native/android-fingerprint-auth/n
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { UsernamePopoverComponent } from './components/login/username-popover/username-popover.component'
+import { GetPwdPopoverComponent } from './components/login/get-pwd-popover/get-pwd-popover.component';
+
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent, UsernamePopoverComponent, GetPwdPopoverComponent],
+  entryComponents: [UsernamePopoverComponent, GetPwdPopoverComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
     StatusBar,

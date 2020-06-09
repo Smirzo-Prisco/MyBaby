@@ -8,7 +8,38 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides class="slide-padding" pager="false" centeredSlides="true" effect="cube" paginationType="fraction" slidesPerView="3" spaceBetween="5" zoom="true" speed="50" ionSlideDoubleTap="mettereLike()">  <!--   [options]="slideOpts"  -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let item of items">
+        <!-- <div class="image-container" [style.background-image]="'url(assets/img/' + image + '.jpg)'"></div> -->
+        <div *ngIf="item.type === 'img'" [routerLink]="['/open-multimedia/', item.id, item.type, item.name, item.description]" routerDirection="forward">
+          <img class="gallery-element" src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.name}}">
+        </div>
+        <div class="yt-cntainer" *ngIf="item.type === 'video'" [routerLink]="['/open-multimedia/', item.id, item.type, item.name, item.description]" routerDirection="forward">
+          <iframe class="gallery-element" [src]="sanitizeUrl(item.name)" width="100%" frameborder="0"></iframe>
+          <div class="yt-mask"></div>
+        </div>
+        <div class="description">{{item.date}} - {{item.description}}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataGallery($event)">
+    <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Caricamento dati...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
+
+
+  <ion-fab></ion-fab>
+</ion-content>
+
+<!--
+<ion-content>
+  <ion-slides class="slide-padding" pager="false" centeredSlides="true" effect="cube" paginationType="fraction" slidesPerView="3" spaceBetween="5" zoom="true" speed="50" ionSlideDoubleTap="mettereLike()">
     <ion-slide *ngFor="let item of items">
       <div>
         <div style="width: 100%" *ngIf="item.type === 'img'">
@@ -32,3 +63,4 @@
     </ion-slide>
   </ion-slides>
 </ion-content>
+-->

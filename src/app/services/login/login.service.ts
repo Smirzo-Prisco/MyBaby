@@ -11,9 +11,6 @@ import { CommonService } from '../../services/common/common.service';
   providedIn: 'root'
 })
 export class LoginService {
-    // deviceid: string = "optional";
-    // secondarydeviceid: string = "optional";
-    // idapp: string = "easyprj.app";
     token: string = null;
     username: string;
     password: string;
@@ -29,26 +26,40 @@ export class LoginService {
     ) {}
 
     // SET OR UPDATE NOTIFICATION TOKEN OF CURRENT DEVICE
-    updateUserToken(token) {
+    updateUserToken(data) {
+        const params = {
+            userId: data.userId,
+            token: data.firebaseToken,
+            act: 'update_user_token'
+        }
+
+        return this.http.post(environment.BASEURL + 'app/router.php', params, {})
+          .then((response) => {
+            console.log(response.data);
+
+            if(response.data == 'ok') {
+                this.router.navigateByUrl('/timeline');
+            } else {
+                this.router.navigateByUrl('/login');
+            }
+          })
+    }
+
+    goHome(userInfo){
         this.nativeStorage.getItem('userInfo')
             .then(
                 data => {
-                  console.log('userInfo:', data);
+                    data['userId'] = userInfo.userId;
+                    data['admin'] = userInfo.admin;
+                    data['fingerPrint'] = userInfo.fingerPrint;
 
-                  const params = {
-                    userId: data.userId,
-                    act: 'update_user_token'
-                  }
+                    console.log(data);
 
-                  return this.http.post(environment.BASEURL + 'app/router.php', params, {})
-                      .then((response) => {
-                        console.log(response.data);
-                      })
+                    this.nativeStorage.setItem('userInfo', data);
+                    this.updateUserToken(data);
                 },
-                error => {
-                  console.error(error)
-                }
-            );
+                error => { console.error(error) }
+            )
     }
 
     login(form) {
@@ -74,6 +85,8 @@ export class LoginService {
             .then((data) => {
                 let response = JSON.parse(data.data);
 
+                console.log('accesso:', response.errNo);
+
                 switch (response.errNo) {
                     case 1:   //  utente errato
                         this.commonService.presentAlert('Utente non riconosciuto');
@@ -84,21 +97,40 @@ export class LoginService {
                     case 3:   //  utente corretto, password vuota
                         this.goHome(response);
                         break;
-                    case 4:
+                    case 4:   //  utente corretto
                         this.goHome(response);
                         break;
                 }
             })
     }
 
-    goHome(data){
-        this.nativeStorage.setItem('userInfo', {
-            userId: data.userId,
-            isAdmin: data.permission,
-            fingerPrint: data.fingerprint
-        });
+    getPwd(email) {
+        const params = {
+          act: 'set_pwd_retrieve',
+          email: email
+        }
 
-        this.router.navigateByUrl('/gallery');
+        const headers = {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT'
+        };
+
+        return this.http
+            .post(environment.BASEURL + 'app/router.php', params, headers)
+            .then((data) => {
+              console.log(data);
+
+                this.commonService.dismissLoading();
+
+                if(data.data == 'ok') {
+                    this.commonService.presentAlert('E-mail inviata correttamente');
+                } else {
+                    this.commonService.presentAlert('Errore nell\'invio dell\'e-mail');
+                }
+
+              return data.data;
+            })
     }
 
     // VALIDATE TOKEN

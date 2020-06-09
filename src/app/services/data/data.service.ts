@@ -38,11 +38,12 @@ export class DataService {
       })
   }
 
-  getGalleryItems(from) {
+  getGalleryItems(from, to) {
     const params = {
       act: 'get_gallery_items',
-      n_items: from,
-      userId: this.nativeStorage.getItem('userInfo').then( data => { return data.userId } )
+      from: from,
+      to: to
+      // userId: this.nativeStorage.getItem('userInfo').then( data => { return data.userId } )
     }
 
     const headers = {
@@ -54,6 +55,29 @@ export class DataService {
     return this.http
         .post(environment.BASEURL + 'app/router.php', params, headers)
         .then((data) => {
+          return JSON.parse(data.data);
+        })
+  }
+
+  openMultimedia(id, type) {
+    const params = {
+      act: 'get_single_multimedia',
+      userId: this.nativeStorage.getItem('userInfo').then( data => { return data.userId } ),
+      id: id,
+      type: type
+    }
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT'
+    };
+
+    return this.http
+        .post(environment.BASEURL + 'app/router.php', params, headers)
+        .then((data) => {
+          console.log(data);
+
           return JSON.parse(data.data);
         })
   }

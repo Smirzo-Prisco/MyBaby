@@ -1,3 +1,22 @@
-<p>
-  get-pwd-popover works!
-</p>
+<ion-item>
+  <ion-input
+          inputmode="email"
+          type="email"
+          name="email"
+          placeholder="E-mail"
+          [(ngModel)]="email"
+          clearInput="true"
+          autofocus="true"
+          color="tertiary"
+          required>
+  </ion-input>
+  <ion-button
+          mode="ios"
+          size="default"
+          expand="full"
+          fill="clear"
+          color="tertiary"
+          type="email"
+          (click)=getPwd()
+          shape="round">Invia</ion-button>
+</ion-item>
