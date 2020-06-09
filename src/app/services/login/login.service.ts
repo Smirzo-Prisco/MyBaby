@@ -38,7 +38,7 @@ export class LoginService {
             console.log(response.data);
 
             if(response.data == 'ok') {
-                this.router.navigateByUrl('/timeline');
+                this.router.navigateByUrl('/gallery');
             } else {
                 this.router.navigateByUrl('/login');
             }
