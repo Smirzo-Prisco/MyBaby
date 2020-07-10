@@ -38,7 +38,7 @@ export class LoginService {
             console.log(response.data);
 
             if(response.data == 'ok') {
-                this.router.navigateByUrl('/gallery');
+                this.router.navigateByUrl('app/tabs/timeline');
             } else {
                 this.router.navigateByUrl('/login');
             }
@@ -80,6 +80,12 @@ export class LoginService {
             login_pwd: this.password
         }
 
+        const headers = {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT'
+        };
+
         return this.http
             .post(environment.BASEURL + 'app/router.php', params, {})
             .then((data) => {
@@ -101,6 +107,8 @@ export class LoginService {
                         this.goHome(response);
                         break;
                 }
+
+                this.commonService.dismissLoading();
             })
     }
 

@@ -35,7 +35,7 @@ export class LoginPage {
 
   ngOnInit() {
     //    nascondo il menu
-    this.sideMenu.enable(false);
+    // this.sideMenu.enable(false);
   }
 
   // ON LOGIN SENDS ACCESS DATA TO AUTH SERVICE

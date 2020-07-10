@@ -1,21 +1,31 @@
+<!--
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>gallery</ion-title>
+    <ion-title>Gallery</ion-title>
   </ion-toolbar>
 </ion-header>
+-->
 
 <ion-content>
+  <ion-refresher slot ="fixed" disabled="false" (ionRefresh)="loadDataGallery($event)" pullFactor="0.5" pullMin="100" pullMax="200">
+    <ion-refresher-content
+            pullingIcon="arrow-down"
+            pullingText="Trascina per ricaricare"
+            refreshingSpinner="bubbles"
+            refreshingText="Ricarico.....">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-grid>
     <ion-row>
       <ion-col size="6" *ngFor="let item of items">
         <!-- <div class="image-container" [style.background-image]="'url(assets/img/' + image + '.jpg)'"></div> -->
-        <div *ngIf="item.type === 'img'" [routerLink]="['/open-multimedia/', item.id, item.type, item.name, item.description]" routerDirection="forward">
+        <div *ngIf="item.type === 'img'" [routerLink]="['/open-multimedia/', item.id, item.type, item.name, item.description, item.date]" routerDirection="forward">
           <img class="gallery-element" src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.name}}">
         </div>
-        <div class="yt-cntainer" *ngIf="item.type === 'video'" [routerLink]="['/open-multimedia/', item.id, item.type, item.name, item.description]" routerDirection="forward">
+        <div class="yt-cntainer" *ngIf="item.type === 'video'" [routerLink]="['/open-multimedia/', item.id, item.type, item.name, item.description, item.date]" routerDirection="forward">
           <iframe class="gallery-element" [src]="sanitizeUrl(item.name)" width="100%" frameborder="0"></iframe>
           <div class="yt-mask"></div>
         </div>
@@ -30,11 +40,6 @@
             loadingText="Caricamento dati...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
-
-
-
-
-  <ion-fab></ion-fab>
 </ion-content>
 
 <!--

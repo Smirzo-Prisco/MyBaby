@@ -135,7 +135,6 @@ export class AppComponent {
         });
 
 
-
       // this.statusBar.styleDefault();
       //
       // //  Annuncio Firebase Cloud Messaging

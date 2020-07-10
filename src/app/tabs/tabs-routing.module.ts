@@ -1,22 +1,40 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
+import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'tabs/home', pathMatch: 'full' },
   {
     path: 'tabs',
     component: TabsPage,
     children: [
-      { path: 'home', loadChildren: () => import('../pages/home/home.module').then(m => m.HomePageModule) },
-      { path: 'list', loadChildren: () => import('../pages/list/list.module').then(m => m.ListPageModule) }
+      {
+        path: 'timeline',
+        loadChildren: () => import('../pages/timeline/timeline.module').then(m => m.TimelinePageModule)
+      },
+      {
+        path: 'gallery',
+        loadChildren: () => import('../pages/gallery/gallery.module').then(m => m.GalleryPageModule)
+      },
+      {
+        path: 'list',
+        loadChildren: () => import('../pages/list/list.module').then(m => m.ListPageModule)
+      },
+      {
+        path: 'tabs',
+        redirectTo: 'timeline',
+        pathMatch: 'full'
+      }
     ]
+  },
+  {
+    path: 'tabs',
+    redirectTo: 'timeline',
+    pathMatch: 'full'
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class TabsPageRoutingModule {}

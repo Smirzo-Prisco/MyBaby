@@ -1,5 +1,9 @@
+<!--
 <ion-app>
   <ion-split-pane contentId="main-content">
+-->
+
+    <!-- MENU
     <ion-menu contentId="main-content" type="overlay">
       <ion-header>
         <ion-toolbar>
@@ -19,33 +23,39 @@
         </ion-list>
       </ion-content>
     </ion-menu>
+    -->
+
+    <!--  FAB LEFT  --
+    <ion-fab horizontal="start" vertical="bottom" slot="fixed" contentId="main-content" type="overlay">
+      <ion-fab-button color="tertiary">
+        <ion-icon name="ellipsis-vertical" color="light"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="top" *ngFor="let p of appPages">
+        <ion-fab-button color="light" *ngIf="p.type === 'config'" [routerDirection]="'root'" [routerLink]="[p.url]">
+          <ion-icon [name]="p.icon" color="tertiary"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+
+    !--  FAB RIGHT --
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed" contentId="main-content" type="overlay">
+      <ion-fab-button color="light">
+        <img src="../../../assets/icon/favicon.png">
+      </ion-fab-button>
+      <ion-fab-list side="start" *ngFor="let p of appPages">
+        <ion-fab-button color="light" *ngIf="p.type === 'regular'" [routerDirection]="'root'" [routerLink]="[p.url]">
+          <ion-icon [name]="p.icon" color="tertiary"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+    !---->
+
+<!--
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>
-
-
-
-<!--  FAB LEFT  --
-<ion-fab horizontal="start" vertical="bottom" slot="fixed" contentId="main-content" type="overlay">
-  <ion-fab-button color="tertiary">
-    <ion-icon name="ellipsis-vertical" color="light"></ion-icon>
-  </ion-fab-button>
-  <ion-fab-list side="top" *ngFor="let p of appPages">
-    <ion-fab-button color="light" *ngIf="p.type === 'config'" [routerDirection]="'root'" [routerLink]="[p.url]">
-      <ion-icon [name]="p.icon" color="tertiary"></ion-icon>
-    </ion-fab-button>
-  </ion-fab-list>
-</ion-fab>
-
-<!-  FAB RIGHT --
-<ion-fab horizontal="end" vertical="bottom" slot="fixed" contentId="main-content" type="overlay">
-  <ion-fab-button color="light">
-    <img src="../../../assets/icon/favicon.png">
-  </ion-fab-button>
-  <ion-fab-list side="start" *ngFor="let p of appPages">
-    <ion-fab-button color="light" *ngIf="p.type === 'regular'" [routerDirection]="'root'" [routerLink]="[p.url]">
-      <ion-icon [name]="p.icon" color="tertiary"></ion-icon>
-    </ion-fab-button>
-  </ion-fab-list>
-</ion-fab>
 -->
+
+<ion-app>
+  <ion-router-outlet></ion-router-outlet>
+</ion-app>

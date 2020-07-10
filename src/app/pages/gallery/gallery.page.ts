@@ -24,7 +24,6 @@ export class GalleryPage implements OnInit {
     ) { }
 
     ngOnInit() {
-      this.commonService.presentLoading();
       this.to = 8;
 
       console.log(0, this.to);

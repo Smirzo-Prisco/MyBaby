@@ -16,6 +16,7 @@ export class OpenMultimediaPage implements OnInit {
   id = null;
   type = '';
   name = '';
+  date = '';
   description = '';
   public items: Array<any>;
   public env: any;
@@ -33,6 +34,7 @@ export class OpenMultimediaPage implements OnInit {
     this.type = this.activatedRoute.snapshot.paramMap.get('type');
     this.name = this.activatedRoute.snapshot.paramMap.get('name');
     this.description = this.activatedRoute.snapshot.paramMap.get('description');
+    this.date = this.activatedRoute.snapshot.paramMap.get('date');
     this.env = environment;
     this.commonService.presentLoading();
 
@@ -40,6 +42,7 @@ export class OpenMultimediaPage implements OnInit {
     console.log(this.type);
     console.log(this.name);
     console.log(this.description);
+    console.log(this.date);
 
     this.dataService.openMultimedia(this.id, this.type)
         .then((data) => {

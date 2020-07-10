@@ -22,8 +22,15 @@ import { UsernamePopoverComponent } from './components/login/username-popover/us
 import { GetPwdPopoverComponent } from './components/login/get-pwd-popover/get-pwd-popover.component';
 
 @NgModule({
-  declarations: [AppComponent, UsernamePopoverComponent, GetPwdPopoverComponent],
-  entryComponents: [UsernamePopoverComponent, GetPwdPopoverComponent],
+  declarations: [
+    AppComponent,
+    UsernamePopoverComponent,
+    GetPwdPopoverComponent
+  ],
+  entryComponents: [
+    UsernamePopoverComponent,
+    GetPwdPopoverComponent
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
