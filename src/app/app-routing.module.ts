@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { MultimediaService } from './services/resolvers/multimedia.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -8,7 +9,8 @@ const routes: Routes = [
   // { path: 'gallery', loadChildren: () => import('./pages/gallery/gallery.module').then( m => m.GalleryPageModule) },
   // { path: 'timeline', loadChildren: () => import('./pages/timeline/timeline.module').then( m => m.TimelinePageModule) },
   {
-    path: 'open-multimedia/:id/:type/:name/:description/:date',
+    path: 'open-multimedia/:id/:type',
+    resolve: { multimedia: MultimediaService },
     loadChildren: () => import('./pages/open-multimedia/open-multimedia.module').then( m => m.OpenMultimediaPageModule)
   }
 ];

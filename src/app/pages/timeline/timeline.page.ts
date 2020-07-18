@@ -27,7 +27,8 @@ export class TimelinePage implements OnInit {
 
     this.dataService.getTimeline(0, this.to)
       .then((data) => {
-        console.log(data);
+        console.log('TIMELINE:', data);
+
         this.items = data;
         this.env = environment;
 

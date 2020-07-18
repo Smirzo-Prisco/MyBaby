@@ -16,10 +16,6 @@ const routes: Routes = [
         loadChildren: () => import('../pages/gallery/gallery.module').then(m => m.GalleryPageModule)
       },
       {
-        path: 'list',
-        loadChildren: () => import('../pages/list/list.module').then(m => m.ListPageModule)
-      },
-      {
         path: 'tabs',
         redirectTo: 'timeline',
         pathMatch: 'full'

@@ -20,6 +20,9 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 })
 
 export class LoginPage {
+  username = '';
+  password = '';
+  rememberMe = '';
   showPassword = false;
   passwordToggleIcon = 'eye';
 

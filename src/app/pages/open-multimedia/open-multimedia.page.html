@@ -4,8 +4,11 @@
       <ion-back-button defaultHref="/gallery"></ion-back-button>
     </ion-buttons>
     <ion-title>
-      <div *ngIf="type === 'img'">Foto</div>
-      <div *ngIf="type === 'video'">Video</div>
+      <div *ngIf="item.type == 'img' || item.type == '1' || item.type == '6' || item.type == '8' || item.type == '9'">Foto</div>
+      <div *ngIf="item.type == 'video' || item.type == '5' || item.type == '7'">Video</div>
+      <div *ngIf="item.type == 'dedica' || item.type == '2'">Dedica</div>
+      <div *ngIf="item.type == 'news' || item.type == '3'">News</div>
+      <div *ngIf="item.type == 'present' || item.type == '4'">Regalo</div>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,32 +16,31 @@
 <ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>{{date}}</ion-card-title>
+      <ion-card-title>{{item.date}}</ion-card-title>
+      <ion-card-subtitle>{{item.description}}</ion-card-subtitle>
     </ion-card-header>
 
-    <div *ngIf="type === 'img'" style="text-align: center;">
-      <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{name}}">
+    <div *ngIf="item.type == 'img' || item.type == '1' || item.type == '6' || item.type == '8' || item.type == '9' || item.type == '3' || item.type == '4'" style="text-align: center;">
+      <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.name}}" style="text-align: center; align-content: center; align-self: center; max-width: 100%; max-height: 100%;">
     </div>
 
-    <div *ngIf="type === 'video'">
-      <iframe class="gallery-element" [src]="sanitizeUrl(name)" allowscriptaccess="always" width="100%" frameborder="0" allowfullscreen autoplay></iframe>
+    <div *ngIf="item.type == 'video' || item.type == '5' || item.type == '7'">
+      <iframe class="gallery-element" [src]="sanitizeUrl(item.name)" allowscriptaccess="always" width="100%" frameborder="0" allowfullscreen autoplay></iframe>
     </div>
 
-    <ion-card-subtitle>{{description}}</ion-card-subtitle>
-
-    <ion-footer>
+    <ion-footer *ngIf="item.type == 'img' || item.type == 'video' || item.type == '1' || item.type == '6' || item.type == '8' || item.type == '9' || item.type == '5' || item.type == '7'">
       <ion-row>
         <ion-col col-6 class="ion-text-center">
           <ion-button color="tertiary"><ion-icon name="heart"></ion-icon></ion-button>
         </ion-col>
         <ion-col col-6 class="ion-text-center">
-          <ion-button color="tertiary"><ion-icon name="chatbubble-ellipses"></ion-icon></ion-button>
+          <ion-button color="tertiary"><ion-icon name="chatbubble"></ion-icon></ion-button>
         </ion-col>
       </ion-row>
     </ion-footer>
 
-    <ion-card-content>
-      <div class="comment_container" *ngFor="let comment of items">
+    <ion-card-content *ngIf="item.type == 'img' || item.type == 'video' || item.type == '1' || item.type == '6' || item.type == '8' || item.type == '9' || item.type == '5' || item.type == '7'">
+      <div class="comment_container" *ngFor="let comment of item.comments">
         <ion-item-divider *virtualHeader="let header">
           {{ header }}
         </ion-item-divider>
@@ -46,33 +48,12 @@
         <div class="comment_input_text">{{comment.text}}</div>
         <div class="comment-footer">
           <div class="like"><ion-icon name="md-heart"></ion-icon></div>
-          <div class="time">{{comment.time}}</div>
+          <div class="time">{{comment.date}}</div>
         </div>
       </div>
-      <div *ngIf="items?.length === 0">
+      <div *ngIf="item.comments?.length === 0">
         <ion-card-subtitle class="ion-text-center">Nessun commento</ion-card-subtitle>
       </div>
     </ion-card-content>
   </ion-card>
-
-
-  <!--
-  <div *ngIf="type === 'img'" style="text-align: center;">
-    <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{name}}">
-  </div>
-  <div *ngIf="type === 'video'">
-    <iframe class="gallery-element" [src]="sanitizeUrl(name)" allowscriptaccess="always" width="100%" frameborder="0" allowfullscreen autoplay></iframe>
-  </div>
-  <div class="comment_container" *ngFor="let comment of items">
-    <ion-item-divider *virtualHeader="let header">
-      {{ header }}
-    </ion-item-divider>
-    <div class="comment_author">{{comment.author.user_kinship | titlecase}} {{comment.author.user_first | titlecase}}</div>
-    <div class="comment_input_text">{{comment.text}}</div>
-    <div class="comment-footer">
-      <div class="like"><ion-icon name="md-heart"></ion-icon></div>
-      <div class="time">{{comment.time}}</div>
-    </div>
-  </div>
-  -->
 </ion-content>

@@ -15,10 +15,8 @@ import { DomSanitizer } from "@angular/platform-browser";
 export class OpenMultimediaPage implements OnInit {
   id = null;
   type = '';
-  name = '';
-  date = '';
-  description = '';
-  public items: Array<any>;
+  public item: any;
+  // public item: Array<any>;
   public env: any;
 
   constructor(
@@ -30,27 +28,10 @@ export class OpenMultimediaPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.type = this.activatedRoute.snapshot.paramMap.get('type');
-    this.name = this.activatedRoute.snapshot.paramMap.get('name');
-    this.description = this.activatedRoute.snapshot.paramMap.get('description');
-    this.date = this.activatedRoute.snapshot.paramMap.get('date');
+    console.log(this.activatedRoute.snapshot.data['multimedia']);
+
+    this.item = this.activatedRoute.snapshot.data['multimedia'];
     this.env = environment;
-    this.commonService.presentLoading();
-
-    console.log(this.id);
-    console.log(this.type);
-    console.log(this.name);
-    console.log(this.description);
-    console.log(this.date);
-
-    this.dataService.openMultimedia(this.id, this.type)
-        .then((data) => {
-            console.log(data);
-
-            this.items = data;
-            this.commonService.dismissLoading();
-        });
   }
 
   sanitizeUrl(yt_id){

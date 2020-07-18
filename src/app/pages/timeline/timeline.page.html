@@ -1,35 +1,4 @@
-<!--
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Timeline</ion-title>
-  </ion-toolbar>
-</ion-header>
--->
-
 <ion-content>
-<!--  <ion-virtual-scroll [items]="items" approxItemHeight="320px">-->
-<!--    <ion-item-divider *virtualHeader="let header">-->
-<!--      {{ header }}-->
-<!--    </ion-item-divider>-->
-<!--    <ion-item *virtualItem="let item">-->
-<!--      <ion-avatar slot="start">-->
-<!--        <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.img}}">-->
-<!--      </ion-avatar>-->
-<!--      <p>-->
-<!--        {{item.description}}-->
-<!--      </p>-->
-<!--      <br>-->
-<!--      <p>-->
-<!--        {{item.author}} - {{item.date}}-->
-<!--      </p>-->
-<!--    </ion-item>-->
-<!--  </ion-virtual-scroll>-->
-
-
-
   <ion-refresher slot ="fixed" disabled="false" (ionRefresh)="loadDataTimeline($event)" pullFactor="0.5" pullMin="100" pullMax="200">
     <ion-refresher-content
       pullingIcon="arrow-down"
@@ -39,64 +8,23 @@
     </ion-refresher-content>
   </ion-refresher>
 
-
-  <ion-card *ngFor="let item of items">
+  <!-- <ion-card *ngFor="let item of items" [routerLink]="['/open-multimedia/', item.id, item.type, item.name, item.description, item.date]"> -->
+  <ion-card *ngFor="let item of items" [routerLink]="['/open-multimedia/', item.id, item.type]">
     <ion-card-header>
       <ion-card-title>{{item.author}}</ion-card-title>
-      <ion-card-subtitle>{{item.description}}</ion-card-subtitle>
+      <ion-card-subtitle>{{item.tlText}}</ion-card-subtitle>
     </ion-card-header>
 
-    <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.img}}">
+    <ion-row *ngIf="item.type != 2">
+      <ion-col col-2></ion-col>
+      <ion-col col-8><img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.tlImg}}"></ion-col>
+      <ion-col col-2></ion-col>
+    </ion-row>
 
-    <ion-card-content>{{item.date}}</ion-card-content>
+    <ion-card-content>{{item.total}}</ion-card-content>
   </ion-card>
 
-
-  <!--
-  <ion-item *ngFor="let item of items">
-    <ion-item-divider *virtualHeader="let header">
-      {{ header }}
-    </ion-item-divider>
-    <ion-avatar slot="start">
-      <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.img}}">
-    </ion-avatar>
-    <p>{{item.description}}</p>
-    <p>
-      <small>{{item.author}}</small>
-    </p>
-    <p>
-      <small>{{item.date}}</small>
-    </p>
-  </ion-item>
-  -->
-
-
-
-
-
-
-<!--  <ion-virtual-scroll [items]="items" [trackBy]="trackList" approxItemHeight="320px">-->
-<!--    <div class="item" *virtualItem="let item">-->
-<!--      <div class="avatar">-->
-<!--        <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.img}}">-->
-<!--      </div>-->
-<!--      <p>{{item.description}}</p>-->
-<!--      <p>-->
-<!--        <small>{{item.author}} - {{item.date}}</small>-->
-<!--      </p>-->
-<!--    </div>-->
-<!--  </ion-virtual-scroll>-->
-
-
-
-
-
-
-
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataTimeline($event)">
-    <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Caricamento dati...">
-    </ion-infinite-scroll-content>
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Caricamento dati..."> </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

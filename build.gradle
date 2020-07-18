@@ -17,7 +17,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:4.0.1'
     }
 }
 
@@ -34,11 +34,11 @@ android {
     compileSdkVersion 29  //already defined
 
     defaultConfig {
-        applicationId "videocorsi.esempi.newsreaderv13"
+        applicationId "com.smirzo.elle"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName "1.1"
     }
 
     sourceSets {
@@ -53,8 +53,8 @@ android {
     buildToolsVersion '29.0.3'
     buildTypes {
         release {
-            applicationIdSuffix 'LeL'
-            versionNameSuffix '0.0.0'
+            applicationIdSuffix 'MyBaby'
+            versionNameSuffix '0.0.1'
         }
     }
 }

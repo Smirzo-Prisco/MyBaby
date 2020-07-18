@@ -22,10 +22,10 @@
     <ion-row>
       <ion-col size="6" *ngFor="let item of items">
         <!-- <div class="image-container" [style.background-image]="'url(assets/img/' + image + '.jpg)'"></div> -->
-        <div *ngIf="item.type === 'img'" [routerLink]="['/open-multimedia/', item.id, item.type, item.name, item.description, item.date]" routerDirection="forward">
+        <div *ngIf="item.type === 'img'" [routerLink]="['/open-multimedia/', item.id, item.type]" routerDirection="forward">
           <img class="gallery-element" src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.name}}">
         </div>
-        <div class="yt-cntainer" *ngIf="item.type === 'video'" [routerLink]="['/open-multimedia/', item.id, item.type, item.name, item.description, item.date]" routerDirection="forward">
+        <div class="yt-cntainer" *ngIf="item.type === 'video'" [routerLink]="['/open-multimedia/', item.id, item.type]" routerDirection="forward">
           <iframe class="gallery-element" [src]="sanitizeUrl(item.name)" width="100%" frameborder="0"></iframe>
           <div class="yt-mask"></div>
         </div>
