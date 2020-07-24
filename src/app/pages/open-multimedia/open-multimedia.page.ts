@@ -16,8 +16,9 @@ export class OpenMultimediaPage implements OnInit {
   id = null;
   type = '';
   public item: any;
-  // public item: Array<any>;
   public env: any;
+  like = false;
+  likeToggleIcon = 'heart';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -32,11 +33,25 @@ export class OpenMultimediaPage implements OnInit {
 
     this.item = this.activatedRoute.snapshot.data['multimedia'];
     this.env = environment;
+    this.like = this.item.likeDetails.me;
+    this.toggleLikeIcon();
   }
 
   sanitizeUrl(yt_id){
       let ytParams = '?showinfo=0&frameborder=0&iv_load_policy=3&modestbranding=1&rel=0&autoplay=1&playsinline=0';
 
       return this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + yt_id + ytParams);
+  }
+
+  setLike(id, type) {
+    this.dataService.setLike(id, type, this.like);
+  }
+
+  toggleLikeIcon(): void {
+    if(!this.like) {
+      this.likeToggleIcon = 'heart-outline';
+    } else {
+      this.likeToggleIcon = 'heart';
+    }
   }
 }

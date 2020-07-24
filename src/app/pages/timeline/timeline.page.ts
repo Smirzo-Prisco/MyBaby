@@ -27,7 +27,7 @@ export class TimelinePage implements OnInit {
 
     this.dataService.getTimeline(0, this.to)
       .then((data) => {
-        console.log('TIMELINE:', data);
+        console.log('TIMELINE init:', data);
 
         this.items = data;
         this.env = environment;
@@ -39,13 +39,13 @@ export class TimelinePage implements OnInit {
   loadDataTimeline(event) {
     setTimeout(() => {
         let itemsLength = this.items.length;
-        console.log('Done', itemsLength);
+        console.log('TIMELINE - Elementi visibili:', itemsLength);
 
         this.commonService.presentLoading();
 
         this.dataService.getTimeline(itemsLength, this.to)
             .then((data) => {
-                console.log(data);
+                console.log('loadDataTimeline:', data);
 
                 for (let i = 0; i < this.to; i++) {
                     this.items.push(data[i]);

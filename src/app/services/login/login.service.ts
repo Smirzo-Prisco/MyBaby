@@ -51,7 +51,7 @@ export class LoginService {
                 data => {
                     data['userId'] = userInfo.userId;
                     data['admin'] = userInfo.admin;
-                    data['fingerPrint'] = userInfo.fingerPrint;
+                    // data['fingerPrint'] = userInfo.fingerPrint;
 
                     console.log(data);
 

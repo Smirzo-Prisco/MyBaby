@@ -21,20 +21,28 @@
     </ion-card-header>
 
     <div *ngIf="item.type == 'img' || item.type == '1' || item.type == '6' || item.type == '8' || item.type == '9' || item.type == '3' || item.type == '4'" style="text-align: center;">
-      <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.name}}" style="text-align: center; align-content: center; align-self: center; max-width: 100%; max-height: 100%;">
+      <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.name}}" style="text-align: center; align-content: center; align-self: center; max-width: 100%; max-height: 100px;">
     </div>
 
     <div *ngIf="item.type == 'video' || item.type == '5' || item.type == '7'">
       <iframe class="gallery-element" [src]="sanitizeUrl(item.name)" allowscriptaccess="always" width="100%" frameborder="0" allowfullscreen autoplay></iframe>
     </div>
 
+    <!--  LIKE  -->
+    <ion-card-subtitle *ngIf="item.likeDetails?.total === 0">Non piace a nessuno :-(</ion-card-subtitle>
+    <ion-card-subtitle *ngIf="item.likeDetails?.total > 0">Piace a
+      <div *ngIf="item.likeDetails?.me > 0">te e a </div>
+      <div *ngFor="let user of item.likeDetails.users">{{user}}</div>
+    </ion-card-subtitle>
+
     <ion-footer *ngIf="item.type == 'img' || item.type == 'video' || item.type == '1' || item.type == '6' || item.type == '8' || item.type == '9' || item.type == '5' || item.type == '7'">
       <ion-row>
         <ion-col col-6 class="ion-text-center">
-          <ion-button color="tertiary"><ion-icon name="heart"></ion-icon></ion-button>
+          <ion-icon slot="end" [name]="likeToggleIcon" color="tertiary" style="font-size:40px;" (click)="setLike(item.id, 8)"></ion-icon>
+          <!-- <ion-icon name="heart" (click)="setLike(item.id, 8)" color="tertiary" style="font-size:40px;"></ion-icon> -->
         </ion-col>
         <ion-col col-6 class="ion-text-center">
-          <ion-button color="tertiary"><ion-icon name="chatbubble"></ion-icon></ion-button>
+          <ion-icon name="text" color="tertiary" style="font-size:40px;"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-footer>

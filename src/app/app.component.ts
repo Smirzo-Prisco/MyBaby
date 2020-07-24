@@ -82,7 +82,7 @@ export class AppComponent {
       let message = '';
       let presentAlert = false;
 
-      this.goToLogin();
+      // this.goToLogin();
 
       this.firebaseX.getToken()
           .then(token => {
@@ -96,8 +96,19 @@ export class AppComponent {
               this.goToLogin();
             }
 
-            console.log('Saving token in the storage...');
-            this.nativeStorage.setItem('userInfo', {firebaseToken: token});
+            //  se ho il token e l'id utente settati nello storage salto la login
+            this.nativeStorage.getItem('userInfo').then( data => {
+                console.log('local storage:', data);
+
+                if(data.firebaseToken != null && data.firebaseToken != '' && data.userId != null && data.userId != '') {
+                    this.router.navigateByUrl('app/tabs/timeline');
+                } else {
+                    console.log('Saving token in the storage...');
+                    this.nativeStorage.setItem('userInfo', {firebaseToken: token});
+
+                    this.goToLogin();
+                }
+            })
 
             // INVIA TOKEN ALL'ANAGRAFICA UTENTI SUL DATABASE
             /*
@@ -105,7 +116,7 @@ export class AppComponent {
               this.loginService.updateUserToken(token);
             }
             */
-          }) // save the token server-side and use it to push notifications to this device
+          })
           .catch(error => {
             console.error('Errore nel recupero del token', error);
 
