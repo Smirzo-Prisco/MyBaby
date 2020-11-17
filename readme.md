@@ -18,7 +18,7 @@
 
 10. Build with gradle bundle: ./gradlew bundle (build in platforms/android/app/build/outputs/bundle/release/app.aab)
 
-11. Build signed apk from command line:
+11. Build signed apk for google from command line:
  - ionic cordova build --release android
  - keytool -genkey -v -keystore key.keystore -alias chiave -keyalg RSA -keysize 2048 -validity 10000
  - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore key.keystore platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk chiave

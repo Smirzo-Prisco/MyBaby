@@ -12,24 +12,28 @@ export class MultimediaService {
   constructor(private http: HTTP, private nativeStorage: NativeStorage) { }
 
   resolve(route: ActivatedRouteSnapshot) {
-    let id = route.paramMap.get('id');
-    let type = route.paramMap.get('type');
+    const id = route.paramMap.get('id');
+    const type = route.paramMap.get('type');
 
-    const params = {
-      act: 'get_single_multimedia',
-      userId: this.nativeStorage.getItem('userInfo').then( data => { return data.userId } ),
-      id: id,
-      type: type
-    }
+    return this.nativeStorage.getItem('userInfo').then( data => {
+        const params = {
+          act: 'get_single_multimedia',
+          userId: data.userId,
+          id: id,
+          type: type
+        }
 
-    const headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT'
-    };
+        const headers = {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT'
+        };
 
-    return this.http
-        .post(environment.BASEURL + 'app/router.php', params, headers)
-        .then((data) => { return JSON.parse(data.data); })
+        return this.http
+            .post(environment.BASEURL + 'app/router.php', params, headers)
+            .then((data) => { return JSON.parse(data.data); })
+    } )
+
+
   }
 }
