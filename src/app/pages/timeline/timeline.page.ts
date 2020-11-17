@@ -4,17 +4,17 @@ import { environment } from '../../../environments/environment';
 import {CommonService} from "../../services/common/common.service";
 
 @Component({
-  selector: 'app-timeline',
-  templateUrl: './timeline.page.html',
-  styleUrls: ['./timeline.page.scss'],
+selector: 'app-timeline',
+templateUrl: './timeline.page.html',
+styleUrls: ['./timeline.page.scss'],
 })
 export class TimelinePage implements OnInit {
-  // public items: Array<{ img: string; author: string; description: string; date: string; }> = [];
-  public items: Array<any>;
-  public env: any;
-  public to: any;
+// public items: Array<{ img: string; author: string; description: string; date: string; }> = [];
+public items: Array<any>;
+public env: any;
+public to: any;
 
-  constructor(
+constructor(
       private dataService: DataService,
       private commonService: CommonService
   ) { }
@@ -27,7 +27,7 @@ export class TimelinePage implements OnInit {
 
     this.dataService.getTimeline(0, this.to)
       .then((data) => {
-        console.log('TIMELINE:', data);
+        console.log('TIMELINE init:', data);
 
         this.items = data;
         this.env = environment;
@@ -39,16 +39,16 @@ export class TimelinePage implements OnInit {
   loadDataTimeline(event) {
     setTimeout(() => {
         let itemsLength = this.items.length;
-        console.log('Done', itemsLength);
+        console.log('TIMELINE - Elementi visibili:', itemsLength);
 
         this.commonService.presentLoading();
 
         this.dataService.getTimeline(itemsLength, this.to)
             .then((data) => {
-                console.log(data);
-
                 for (let i = 0; i < this.to; i++) {
-                    this.items.push(data[i]);
+                    console.log('loadDataTimeline:', data[i]);
+
+                    if(data[i]) this.items.push(data[i]);
                 }
 
                 this.commonService.dismissLoading();
