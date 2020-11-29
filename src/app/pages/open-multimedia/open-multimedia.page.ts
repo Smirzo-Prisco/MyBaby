@@ -5,11 +5,13 @@ import { environment } from '../../../environments/environment';
 import { CommonService } from "../../services/common/common.service";
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 import { DomSanitizer } from "@angular/platform-browser";
+import { NgForm } from '@angular/forms';
+import { NativeStorage } from "@ionic-native/native-storage/ngx";
 
 @Component({
-selector: 'app-open-multimedia',
-templateUrl: './open-multimedia.page.html',
-styleUrls: ['./open-multimedia.page.scss'],
+    selector: 'app-open-multimedia',
+    templateUrl: './open-multimedia.page.html',
+    styleUrls: ['./open-multimedia.page.scss'],
 })
 
 export class OpenMultimediaPage implements OnInit {
@@ -19,18 +21,21 @@ public item: any;
 public env: any;
 like = false;
 likeToggleIcon = 'heart';
+text = '';
 
 constructor(
     private activatedRoute: ActivatedRoute,
     private dataService: DataService,
     private commonService: CommonService,
     private youtube: YoutubeVideoPlayer,
+    private nativeStorage: NativeStorage,
     private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
     console.log(this.activatedRoute.snapshot.data['multimedia']);
 
+    this.commonService.checkConnection();
     this.item = this.activatedRoute.snapshot.data['multimedia'];
     this.env = environment;
     this.like = this.item.likeDetails.me;
@@ -45,13 +50,37 @@ constructor(
 
   setLike(id, type) {
     this.dataService.setLike(id, type, this.like);
+    this.like = !this.like;
+    this.toggleLikeIcon();
   }
 
   toggleLikeIcon(): void {
     if(!this.like) {
-      this.likeToggleIcon = 'heart-outline';
+      this.likeToggleIcon = 'heart-empty';
     } else {
       this.likeToggleIcon = 'heart';
     }
+  }
+
+  setComment(form: NgForm, id) {
+    this.commonService.presentLoading('Invio…');
+
+    //  prendo le informazioni dell'utente dal local storage
+    this.nativeStorage.getItem('userInfo').then( data => {
+        var author = data.userKinship + ' ' + data.userFirst;
+
+        //  salvo il commento
+        this.dataService.setComment(form, id, data.userId, author);
+
+        // lo accodo alla vista
+        this.item.comments.push({
+            author: {
+                user_kinship: data.userKinship,
+                user_first: data.userFirst
+            },
+            text: form.value.text,
+            time: 0
+        });
+    })
   }
 }

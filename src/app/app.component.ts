@@ -145,6 +145,12 @@ export class AppComponent {
             )
         });
 
+        this.firebaseX.onMessageReceived()
+            .subscribe(data => {
+                console.log('User opened a notification ${data}');
+                console.log('notifica aperta:', data);
+            });
+
 
       // this.statusBar.styleDefault();
       //

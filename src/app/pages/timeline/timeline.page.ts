@@ -20,7 +20,8 @@ constructor(
   ) { }
 
   ngOnInit() {
-    this.commonService.presentLoading();
+    this.commonService.checkConnection();
+    // this.commonService.presentLoading();
     this.to = 10;
 
     console.log(0, this.to);

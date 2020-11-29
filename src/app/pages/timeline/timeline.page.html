@@ -8,17 +8,29 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <!-- <ion-card *ngFor="let item of items" [routerLink]="['/open-multimedia/', item.id, item.type, item.name, item.description, item.date]"> -->
-  <ion-card *ngFor="let item of items" [routerLink]="['/open-multimedia/', item.id, item.type]">
-    <ion-card-header>
-      <ion-card-title>{{item.author}}</ion-card-title>
-      <ion-card-subtitle>{{item.tlText}}</ion-card-subtitle>
-    </ion-card-header>
+<!--  <ion-card *ngFor="let item of items" [routerLink]="['/open-multimedia/', item.id, item.type]">-->
+<!--    <ion-card-header>-->
+<!--      <ion-card-title>{{item.author}}</ion-card-title>-->
+<!--      <ion-card-subtitle>{{item.tlText}}</ion-card-subtitle>-->
+<!--    </ion-card-header>-->
 
-    <ion-row *ngIf="item.type != 2">
-      <ion-col col-2></ion-col>
-      <ion-col col-8><img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.tlImg}}"></ion-col>
-      <ion-col col-2></ion-col>
+<!--    <ion-row *ngIf="item.type != 2">-->
+<!--      <ion-col col-2></ion-col>-->
+<!--      <ion-col col-8><img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.tlImg}}"></ion-col>-->
+<!--      <ion-col col-2></ion-col>-->
+<!--    </ion-row>-->
+
+<!--    <ion-card-content>{{item.total}}</ion-card-content>-->
+<!--  </ion-card>-->
+
+  <ion-card *ngFor="let item of items" [routerLink]="['/open-multimedia/', item.id, item.type]">
+<!--    *ngIf="item.type != 2"-->
+    <ion-row>
+      <ion-col col-5><img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.tlImg}}"></ion-col>
+      <ion-col col-7>
+        <ion-card-title>{{item.author}}</ion-card-title>
+        <ion-card-subtitle>{{item.tlText}}</ion-card-subtitle>
+      </ion-col>
     </ion-row>
 
     <ion-card-content>{{item.total}}</ion-card-content>

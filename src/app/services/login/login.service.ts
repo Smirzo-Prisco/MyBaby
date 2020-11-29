@@ -46,14 +46,20 @@ export class LoginService {
     }
 
     goHome(userInfo){
+        console.log('Login response:', userInfo);
+
         this.nativeStorage.getItem('userInfo')
             .then(
                 data => {
                     data['userId'] = userInfo.userId;
-                    data['admin'] = userInfo.admin;
+                    data['userEmail'] = userInfo.userEmail;
+                    data['userKinship'] = userInfo.userKinship;
+                    data['userFirst'] = userInfo.userFirst;
+                    data['userLast'] = userInfo.userLast;
+                    data['admin'] = userInfo.permission;
                     data['fingerPrint'] = userInfo.fingerPrint;
 
-                    console.log(data);
+                    console.log('local storage userInfo:', data);
 
                     this.nativeStorage.setItem('userInfo', data);
                     this.updateUserToken(data);
@@ -91,7 +97,7 @@ export class LoginService {
             .then((data) => {
                 let response = JSON.parse(data.data);
 
-                console.log('accesso:', response.errNo);
+                console.log('codice esito accesso:', response.errNo);
 
                 switch (response.errNo) {
                     case 1:   //  utente errato
