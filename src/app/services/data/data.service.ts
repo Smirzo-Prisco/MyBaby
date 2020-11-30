@@ -110,9 +110,12 @@ export class DataService {
       return this.http
           .post(environment.BASEURL + 'app/router.php', params, this.headers)
           .then((data:any) => {
-            console.log('push notification:', data);
+            console.log('push notification:', data.data);
+            console.log('push notification:', JSON.parse(data.data));
 
             this.commonService.dismissLoading();
+
+            return JSON.parse(data.data);
           })
   }
 }

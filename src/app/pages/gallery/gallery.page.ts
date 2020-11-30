@@ -49,8 +49,20 @@ export class GalleryPage implements OnInit {
         return this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + yt_id + ytParams);
     }
 
-    mettereLike() {
-        console.log('LIKEEEEEEE!!!!');
+    refreshGallery(event) {
+        setTimeout(() => {
+            this.dataService.getGalleryItems(0, this.to)
+            .then((data) => {
+                console.log(data);
+
+                this.items = data;
+                this.env = environment;
+
+                this.commonService.dismissLoading();
+            });
+
+            event.target.complete();
+        }, 300);
     }
 
     loadDataGallery(event) {

@@ -37,6 +37,22 @@ constructor(
       });
   }
 
+  refreshTimeline(event) {
+    setTimeout(() => {
+        this.dataService.getTimeline(0, this.items.length)
+          .then((data) => {
+            console.log('TIMELINE refresh:', data);
+
+            this.items = data;
+            this.env = environment;
+
+            this.commonService.dismissLoading();
+          });
+
+        event.target.complete();
+    }, 300);
+  }
+
   loadDataTimeline(event) {
     setTimeout(() => {
         let itemsLength = this.items.length;
@@ -46,9 +62,9 @@ constructor(
 
         this.dataService.getTimeline(itemsLength, this.to)
             .then((data) => {
-                for (let i = 0; i < this.to; i++) {
-                    console.log('loadDataTimeline:', data[i]);
+                console.log('loadDataTimeline:', data);
 
+                for (let i = 0; i < this.to; i++) {
                     if(data[i]) this.items.push(data[i]);
                 }
 

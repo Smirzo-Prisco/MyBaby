@@ -1,27 +1,12 @@
 <ion-content>
-  <ion-refresher slot ="fixed" disabled="false" (ionRefresh)="loadDataTimeline($event)" pullFactor="0.5" pullMin="100" pullMax="200">
+  <ion-refresher slot ="fixed" disabled="false" (ionRefresh)="refreshTimeline($event)" pullFactor="0.5" pullMin="100" pullMax="200">
     <ion-refresher-content
       pullingIcon="arrow-down"
-      pullingText="Trascina per ricaricare"
+      pullingText="Refresh"
       refreshingSpinner="bubbles"
       refreshingText="Ricarico.....">
     </ion-refresher-content>
   </ion-refresher>
-
-<!--  <ion-card *ngFor="let item of items" [routerLink]="['/open-multimedia/', item.id, item.type]">-->
-<!--    <ion-card-header>-->
-<!--      <ion-card-title>{{item.author}}</ion-card-title>-->
-<!--      <ion-card-subtitle>{{item.tlText}}</ion-card-subtitle>-->
-<!--    </ion-card-header>-->
-
-<!--    <ion-row *ngIf="item.type != 2">-->
-<!--      <ion-col col-2></ion-col>-->
-<!--      <ion-col col-8><img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.tlImg}}"></ion-col>-->
-<!--      <ion-col col-2></ion-col>-->
-<!--    </ion-row>-->
-
-<!--    <ion-card-content>{{item.total}}</ion-card-content>-->
-<!--  </ion-card>-->
 
   <ion-card *ngFor="let item of items" [routerLink]="['/open-multimedia/', item.id, item.type]">
 <!--    *ngIf="item.type != 2"-->
@@ -30,10 +15,9 @@
       <ion-col col-7>
         <ion-card-title>{{item.author}}</ion-card-title>
         <ion-card-subtitle>{{item.tlText}}</ion-card-subtitle>
+        <ion-card-content>{{item.total}}</ion-card-content>
       </ion-col>
     </ion-row>
-
-    <ion-card-content>{{item.total}}</ion-card-content>
   </ion-card>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadDataTimeline($event)">

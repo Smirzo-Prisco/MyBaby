@@ -68,22 +68,22 @@
       <div *ngIf="item.comments?.length === 0">
         <ion-card-subtitle class="ion-text-center">Nessun commento</ion-card-subtitle>
       </div>
-    </ion-card-content>
     <!--  FINE  COMMENT -->
 
     <!--  WRITE A  COMMENT -->
-    <form class="ion-padding-horizontal" #form="ngForm" (ngSubmit)="setComment(form, item.id)">
-      <ion-item>
-<!--    onIonChange={e => setText(e.detail.value!)}-->
-<!--        <ion-textarea name="text" placeholder="Commenta..." autoGrow="true" autofocus="true" color="tertiary" padding="5" enterkeyhint="send" inputmode="text" maxlength="2000" spellcheck="true"></ion-textarea>-->
-<!--        #BAA0F8-->
-        <ion-input type="text" name="text" [(ngModel)]="text" autocorrect="on" autofocus="true" clearInput="true" color="tertiary" enterkeyhint="send" inputmode="text" maxlength="2000" placeholder="Commenta..." style="border: solid 1px #BAA0F8; border-radius: 5px; padding: 5px;"></ion-input>
-<!--    (click)="pickContactNo()-->
-        <ion-button type="submit" color="default" expand="block" size="medium">
-          <ion-icon item-end name="send" color="tertiary"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </form>
-    <!--  END WRITE A  COMMENT -->
+      <form class="ion-padding-horizontal" #form="ngForm" (ngSubmit)="setComment(form, item.id)">
+        <ion-item>
+  <!--    onIonChange={e => setText(e.detail.value!)}-->
+  <!--        <ion-textarea name="text" placeholder="Commenta..." autoGrow="true" autofocus="true" color="tertiary" padding="5" enterkeyhint="send" inputmode="text" maxlength="2000" spellcheck="true"></ion-textarea>-->
+  <!--        #BAA0F8-->
+          <ion-input type="text" name="text" [(ngModel)]="text" autocorrect="on" autofocus="true" clearInput="true" color="tertiary" enterkeyhint="send" inputmode="text" maxlength="2000" placeholder="Commenta..." style="border: solid 1px #BAA0F8; border-radius: 5px; padding: 5px;"></ion-input>
+  <!--    (click)="pickContactNo()-->
+          <ion-button type="submit" color="default" expand="block" size="medium">
+            <ion-icon item-end name="send" color="tertiary"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </form>
+        <!--  END WRITE A  COMMENT -->
+    </ion-card-content>
   </ion-card>
 </ion-content>
