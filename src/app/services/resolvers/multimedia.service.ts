@@ -9,7 +9,10 @@ import { environment } from '../../../environments/environment';
 })
 export class MultimediaService {
 
-  constructor(private http: HTTP, private nativeStorage: NativeStorage) { }
+  constructor(
+    private http: HTTP,
+    private nativeStorage: NativeStorage
+  ) { }
 
   resolve(route: ActivatedRouteSnapshot) {
     const id = route.paramMap.get('id');
@@ -33,7 +36,5 @@ export class MultimediaService {
             .post(environment.BASEURL + 'app/router.php', params, headers)
             .then((data) => { return JSON.parse(data.data); })
     } )
-
-
   }
 }

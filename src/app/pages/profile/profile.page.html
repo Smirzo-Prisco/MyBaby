@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <!--  BACK  -->
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/timeline"></ion-back-button>
+    </ion-buttons>
+    <!--  TITLE  -->
+    <ion-title>Modifica profilo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{item?.user_kinship}} {{item?.user_first}}</ion-card-title>
+      <ion-avatar style="width:70%;height:70%;margin:0 auto;">
+        <!--  AVATAR  -->
+        <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item?.user_avatar}}">
+        <!--  UPLOAD  -->
+        <ion-fab vertical="center" horizontal="center" edge>
+          <ion-fab-button color="success">
+            <ion-icon name="camera"></ion-icon>
+          </ion-fab-button>
+          <!--  SCATTA  -->
+          <ion-fab-list side="left">
+            <ion-fab-button (click)="openCam()">
+              <ion-label>Scatta</ion-label>
+              <ion-icon name="camera" color="tertiary"></ion-icon>
+            </ion-fab-button>
+          </ion-fab-list>
+          <!--  CARICA  -->
+          <ion-fab-list side="right">
+            <ion-fab-button (click)="upload()">
+              <ion-icon name="images" color="tertiary"></ion-icon>
+              <ion-label>Carica</ion-label></ion-fab-button>
+          </ion-fab-list>
+        </ion-fab>
+      </ion-avatar>
+    </ion-card-header>
+
+    <ion-card-content>
+      Keep close to Nature's heart... and break clear away, once in awhile,
+      and climb a mountain or spend a week in the woods. Wash your spirit clean.
+
+      Qui andrà il form
+    </ion-card-content>
+  </ion-card>
+</ion-content>

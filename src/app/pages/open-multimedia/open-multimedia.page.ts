@@ -3,10 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data/data.service';
 import { environment } from '../../../environments/environment';
 import { CommonService } from "../../services/common/common.service";
+import { NativeStorage } from "@ionic-native/native-storage/ngx";
+import { NgForm } from '@angular/forms';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 import { DomSanitizer } from "@angular/platform-browser";
-import { NgForm } from '@angular/forms';
-import { NativeStorage } from "@ionic-native/native-storage/ngx";
 
 @Component({
     selector: 'app-open-multimedia',
@@ -15,22 +15,22 @@ import { NativeStorage } from "@ionic-native/native-storage/ngx";
 })
 
 export class OpenMultimediaPage implements OnInit {
-id = null;
-type = '';
-public item: any;
-public env: any;
-like = false;
-likeToggleIcon = 'heart';
-text = '';
+    id = null;
+    type = '';
+    public item: any;
+    public env: any;
+    like = false;
+    likeToggleIcon = 'heart';
+    text = '';
 
-constructor(
-    private activatedRoute: ActivatedRoute,
-    private dataService: DataService,
-    private commonService: CommonService,
-    private youtube: YoutubeVideoPlayer,
-    private nativeStorage: NativeStorage,
-    private sanitizer: DomSanitizer
-  ) { }
+    constructor(
+        private activatedRoute: ActivatedRoute,
+        private dataService: DataService,
+        private commonService: CommonService,
+        private nativeStorage: NativeStorage,
+        private youtube: YoutubeVideoPlayer,
+        private sanitizer: DomSanitizer
+    ) { }
 
   ngOnInit() {
     console.log(this.activatedRoute.snapshot.data['multimedia']);

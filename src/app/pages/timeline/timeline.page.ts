@@ -33,7 +33,7 @@ constructor(
         this.items = data;
         this.env = environment;
 
-        this.commonService.dismissLoading();
+        // this.commonService.dismissLoading();
       });
   }
 

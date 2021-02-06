@@ -1,76 +1,82 @@
 <ion-header>
   <ion-toolbar>
+    <!--  BACK  -->
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/gallery"></ion-back-button>
     </ion-buttons>
+
+    <!--  TITLE  -->
     <ion-title>
+      <!--
       <div *ngIf="item.type == 'img' || item.type == '1' || item.type == '6' || item.type == '8' || item.type == '9'">Foto</div>
       <div *ngIf="item.type == 'video' || item.type == '5' || item.type == '7'">Video</div>
       <div *ngIf="item.type == 'dedica' || item.type == '2'">Dedica</div>
       <div *ngIf="item.type == 'news' || item.type == '3'">News</div>
       <div *ngIf="item.type == 'present' || item.type == '4'">Regalo</div>
+      -->
+      {{item.date}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>{{item.date}}</ion-card-title>
-      <ion-card-subtitle>{{item.description}}</ion-card-subtitle>
-    </ion-card-header>
+  <ion-header>
+    <!--  <ion-card-title class="ion-padding">{{item.date}}</ion-card-title>  -->
+    <ion-card-subtitle class="ion-padding">{{item.description}}</ion-card-subtitle>
+  </ion-header>
 
-    <div *ngIf="item.type == 'img' || item.type == '1' || item.type == '6' || item.type == '8' || item.type == '9' || item.type == '3' || item.type == '4'" style="text-align: center;">
-      <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.name}}" style="text-align: center; align-content: center; align-self: center; max-width: 100%; max-height: 100%;">
-    </div>
+  <div *ngIf="item.type == 'img' || item.type == '1' || item.type == '6' || item.type == '8' || item.type == '9' || item.type == '3' || item.type == '4'" style="text-align: center;">
+    <img src="{{env.BASEURL}}{{env.IMGFOLDER}}{{item.name}}" style="text-align: center; align-content: center; align-self: center; max-width: 100%; max-height: 100%;">
+  </div>
 
-    <div *ngIf="item.type == 'video' || item.type == '5' || item.type == '7'">
-      <iframe class="gallery-element" [src]="sanitizeUrl(item.name)" allowscriptaccess="always" width="100%" frameborder="0" allowfullscreen autoplay></iframe>
-    </div>
+  <div *ngIf="item.type == 'video' || item.type == '5' || item.type == '7'">
+    <iframe class="gallery-element" [src]="sanitizeUrl(item.name)" allowscriptaccess="always" width="100%" frameborder="0" allowfullscreen autoplay></iframe>
+  </div>
 
-    <!--  LIKE  -->
-    <ion-card-subtitle *ngIf="item.likeDetails?.total === 0">Non piace a nessuno...</ion-card-subtitle>
-    <ion-card-subtitle *ngIf="item.likeDetails?.users?.length > 0 || like" class="comment_input_text">
-      Piace a
-      <span *ngIf="like" class="comment_author">te</span>
-      <span *ngIf="item.likeDetails?.users?.length > 0 && like"> e a </span>
-      <span *ngFor="let user of item.likeDetails.users" class="comment_author">{{user}}</span>
-    </ion-card-subtitle>
-    <!--  FINE  LIKE  -->
+  <!--  LIKE  -->
+  <ion-card-subtitle *ngIf="item.likeDetails?.total === 0">Non piace a nessuno...</ion-card-subtitle>
+  <ion-card-subtitle *ngIf="item.likeDetails?.users?.length > 0 || like" class="comment_input_text">
+    Piace a
+    <span *ngIf="like" class="comment_author">te</span>
+    <span *ngIf="item.likeDetails?.users?.length > 0 && like"> e a </span>
+    <span *ngFor="let user of item.likeDetails.users" class="comment_author">{{user}}</span>
+  </ion-card-subtitle>
+  <!--  FINE  LIKE  -->
 
-    <ion-footer *ngIf="item.type == 'img' || item.type == 'video' || item.type == '1' || item.type == '6' || item.type == '8' || item.type == '9' || item.type == '5' || item.type == '7'">
-      <ion-row>
-        <ion-col col-6 class="ion-text-center">
-          <ion-icon [name]="likeToggleIcon" color="tertiary" style="font-size:40px;" (click)="setLike(item.id, 8)"></ion-icon>
-<!--          <ion-icon name="like ? 'tertiary' : 'default'" color="tertiary" style="font-size:40px;" (click)="setLike(item.id, 8)"></ion-icon>-->
+  <!--  ICON LIKE e COMMENTA  -->
+  <ion-footer *ngIf="item.type == 'img' || item.type == 'video' || item.type == '1' || item.type == '6' || item.type == '8' || item.type == '9' || item.type == '5' || item.type == '7'">
+    <ion-row>
+      <ion-col col-6 class="ion-text-center">
+        <ion-icon [name]="likeToggleIcon" color="tertiary" style="font-size:40px;" (click)="setLike(item.id, 8)"></ion-icon>
+      </ion-col>
+      <ion-col col-6 class="ion-text-center">
+        <ion-icon name="text" color="tertiary" style="font-size:40px;"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-footer>
+  <!--  FINE  ICON LIKE e COMMENTA  -->
 
-          <!-- <ion-icon name="heart" (click)="setLike(item.id, 8)" color="tertiary" style="font-size:40px;"></ion-icon> -->
-        </ion-col>
-        <ion-col col-6 class="ion-text-center">
-          <ion-icon name="text" color="tertiary" style="font-size:40px;"></ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-footer>
-
+  <ion-item *ngIf="item.type == 'img' || item.type == 'video' || item.type == '1' || item.type == '6' || item.type == '8' || item.type == '9' || item.type == '5' || item.type == '7'">
     <!--  COMMENT -->
-    <ion-card-content *ngIf="item.type == 'img' || item.type == 'video' || item.type == '1' || item.type == '6' || item.type == '8' || item.type == '9' || item.type == '5' || item.type == '7'">
-      <div class="comment_container" *ngFor="let comment of item.comments" style="margin-bottom: 5px;">
-        <ion-item-divider *virtualHeader="let header">
-          {{ header }}
-        </ion-item-divider>
-        <div class="comment_author">{{comment.author.user_kinship | titlecase}} {{comment.author.user_first | titlecase}}</div>
-        <div class="comment_input_text">{{comment.text}}</div>
-        <div class="comment-footer">
+    <div class="comment_container" *ngFor="let comment of item.comments" style="margin-bottom: 5px; width:100%;">
+      <ion-item-divider *virtualHeader="let header">
+        {{ header }}
+      </ion-item-divider>
+      <div class="comment_author">{{comment.author.user_kinship | titlecase}} {{comment.author.user_first | titlecase}}</div>
+      <div class="comment_input_text">{{comment.text}}</div>
+      <div class="comment-footer">
 <!--          <div class="like" [color]="comment.iLike ? 'tertiary' : 'default'"><ion-icon name="thumbs-up"></ion-icon></div>-->
-          <div class="time">{{comment.time}}</div>
-        </div>
+        <div class="time">{{comment.time}}</div>
       </div>
-      <div *ngIf="item.comments?.length === 0">
-        <ion-card-subtitle class="ion-text-center">Nessun commento</ion-card-subtitle>
-      </div>
+    </div>
+    <div *ngIf="item.comments?.length === 0">
+      <ion-card-subtitle class="ion-text-center">Nessun commento</ion-card-subtitle>
+    </div>
+  </ion-item>
     <!--  FINE  COMMENT -->
 
     <!--  WRITE A  COMMENT -->
+    <div>
       <form class="ion-padding-horizontal" #form="ngForm" (ngSubmit)="setComment(form, item.id)">
         <ion-item>
   <!--    onIonChange={e => setText(e.detail.value!)}-->
@@ -83,7 +89,6 @@
           </ion-button>
         </ion-item>
       </form>
-        <!--  END WRITE A  COMMENT -->
-    </ion-card-content>
-  </ion-card>
+    </div>
+    <!--  END WRITE A  COMMENT -->
 </ion-content>

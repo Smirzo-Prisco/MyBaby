@@ -12,6 +12,10 @@ const routes: Routes = [
     path: 'open-multimedia/:id/:type',
     resolve: { multimedia: MultimediaService },
     loadChildren: () => import('./pages/open-multimedia/open-multimedia.module').then( m => m.OpenMultimediaPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   }
 ];
 

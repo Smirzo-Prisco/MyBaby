@@ -118,4 +118,18 @@ export class DataService {
             return JSON.parse(data.data);
           })
   }
+
+    getProfile() {
+console.log('in getProfile()');
+        return this.nativeStorage.getItem('userInfo').then( data => {
+            const params = {
+              act: 'get_profile',
+              userId: data.userId
+            }
+
+            return this.http
+                .post(environment.BASEURL + 'app/router.php', params, this.headers)
+                .then((data) => { return JSON.parse(data.data); })
+        } )
+    }
 }

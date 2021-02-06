@@ -24,7 +24,7 @@ export class GalleryPage implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.commonService.checkConnection();
+      this.commonService.checkConnection();
 
       this.to = 8;
 
